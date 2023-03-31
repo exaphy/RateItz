@@ -35,10 +35,17 @@ struct ContentView: View {
                         ScrollView(.horizontal, showsIndicators: false) {
                             LazyHGrid(rows: rows) {
                                 Group {
-                                    CardView(category: "Get Started", colorOne: .charcoalGray, colorTwo: .black)
-                                        .onTapGesture { 
-                                            showSheet = true
-                                        }
+                                    if ratings.ratings.isEmpty {
+                                        CardView(category: "Get Started", colorOne: .charcoalGray, colorTwo: .black)
+                                            .onTapGesture { 
+                                                showSheet = true
+                                            }
+                                    } else {
+                                        CardView(category: "Add RateItz", colorOne: .gray, colorTwo: .black)
+                                            .onTapGesture { 
+                                                showSheet = true
+                                            }  
+                                    }
                                     Group {
                                         NavigationLink {
                                             RatingView(rating: ratingExample) 
@@ -60,24 +67,35 @@ struct ContentView: View {
                         }
                         
                         ScrollView {
-                            HStack {
-                                Text("My RateItz")
-                                    .foregroundColor(.gray) 
-                                    .padding()
-                                Spacer()
-                            }
-                            
-                            ScrollView(.horizontal) {
-                                LazyHGrid(rows: rows) {
-                                    Group {
-                                        CardView(category: "Add RateItz", colorOne: .darkBlue, colorTwo: .midnightPurple)
-                                            .onTapGesture {
-                                                showSheet = true
-                                            }
-                                    }
-                                     .frame(width: geo.size.width * 0.5, height: geo.size.height * 0.2)
+                            if ratings.ratings.isEmpty {
+                                HStack {
+                                    Text("My RateItz")
+                                        .foregroundColor(.gray) 
+                                        .padding()
+                                    Spacer()
                                 }
-                                .padding(.horizontal)
+                                
+                                ScrollView(.horizontal) {
+                                    LazyHGrid(rows: rows) {
+                                        Group {
+                                            CardView(category: "Add RateItz", colorOne: .darkBlue, colorTwo: .midnightPurple)
+                                                .onTapGesture {
+                                                    showSheet = true
+                                                }
+                                        }
+                                        .frame(width: geo.size.width * 0.5, height: geo.size.height * 0.2)
+                                    }
+                                    .padding(.horizontal)
+                                }
+                            } else {
+                                ForEach(ratings.ratings) { rating in
+                                    HStack {
+                                        Text("My RateItz \(rating.category)")
+                                            .foregroundColor(.gray) 
+                                            .padding()
+                                        Spacer()
+                                    }
+                                }
                             }
                         }
                     }

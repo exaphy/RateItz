@@ -13,7 +13,7 @@ struct AddRateItz: View {
     @State private var color =
     Color.white 
     
-    @State private var scales = ["Stars", "Number"] 
+    @State private var scales = ["Stars", "Numbers"] 
     @State private var scaleType = "Stars"
     @State private var scaleStars = ["5", "10"]
     @State private var starRange = 5
